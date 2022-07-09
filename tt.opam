@@ -1,0 +1,13 @@
+opam-version: "2.0"
+name: "tt"
+version: "0.1.0"
+depends: [
+  "dune" {>= "2.0"}
+  "zarith" {>= "1.12"}
+  "ocaml" {>= "4.10"}
+  "menhir" {>= "20200123"}
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+

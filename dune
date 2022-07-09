@@ -1,0 +1,4 @@
+(env (dev (flags (:standard -warn-error -A))))
+(ocamllex lexer)
+(menhir (modules parser))
+(executable (name tt) (libraries zarith) (package tt) (public_name tt))
