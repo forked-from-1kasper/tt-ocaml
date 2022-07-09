@@ -17,8 +17,7 @@ type line =
   | Option of string * string
   | Decl   of decl
 
-type content = line list
-type file = string * content
+type file = line list
 
 let moduleSep = '/'
 let getPath = String.split_on_char moduleSep >> String.concat Filename.dir_sep
@@ -33,8 +32,7 @@ let showLine : line -> string = function
   | Option (opt, value) -> Printf.sprintf "option %s %s" opt value
   | Decl d -> showDecl d
 
-let showContent x = String.concat "\n" (List.map showLine x)
-let showFile : file -> string = function | (p, x) -> Printf.sprintf "module %s where\n%s" p (showContent x)
+let showFile = List.map showLine >> String.concat "\n"
 
 let freshDecl : decl -> decl = function
   | Def (p, Some exp1, exp2) -> Def (p, Some (freshExp exp1), freshExp exp2)

@@ -53,14 +53,11 @@ and checkFile fs path =
   let filename = Filename.basename path in
 
   let chan = open_in path in
-  let (name, con) = Reader.parseErr Parser.file (Lexing.from_channel chan) in
+  let file = Reader.parseErr Parser.file (Lexing.from_channel chan) in
   close_in chan; if !Prefs.verbose then begin
     Printf.printf "Parsed “%s” successfully.\n" filename; flush_all ()
   end;
 
-  if ext name = filename then ()
-  else raise (InvalidModuleName (name, filename));
-
-  let res = checkContent (Files.add path fs) con in
+  let res = checkContent (Files.add path fs) file in
   print_endline ("File “" ^ filename ^ "” checked."); res
 and checkContent fs xs = List.fold_left checkLine fs xs

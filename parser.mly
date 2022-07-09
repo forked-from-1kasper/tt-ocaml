@@ -12,7 +12,7 @@
 %token LPARENS RPARENS
 %token COMMA COLON IRREF EOF HOLE
 %token DEFEQ PROD ARROW FST SND LAM DEF
-%token MODULE WHERE IMPORT AXIOM
+%token IMPORT AXIOM
 %token SIGMA PI OPTION
 %right ARROW PROD
 
@@ -21,13 +21,13 @@
 
 %%
 
-ident : IRREF { Irrefutable } | IDENT { Expr.ident $1 }
-lense : LPARENS ident+ COLON exp2 RPARENS { List.map (fun x -> (x, $4)) $2 }
-telescope : lense telescope { List.append $1 $2 } | lense { $1 }
-params : telescope { $1 } | { [] }
-path : IDENT { getPath $1 }
+ident     : IRREF { Irrefutable } | IDENT { Expr.ident $1 }
+lense     : LPARENS ident+ COLON exp2 RPARENS { List.map (fun x -> (x, $4)) $2 }
+telescope : lense+ { List.concat $1 }
+params    : telescope { $1 } | { [] }
+path      : IDENT { getPath $1 }
 
-file : MODULE IDENT WHERE line* EOF { ($2, $4) }
+file : line* EOF { $1 }
 line : IMPORT path+ { Import $2 } | OPTION IDENT IDENT { Option ($2, $3) } | declarations { Decl $1 }
 repl : COLON IDENT exp2 EOF { Command ($2, $3) } | COLON IDENT EOF { Action $2 } | exp2 EOF { Eval $1 } | EOF { Nope }
 

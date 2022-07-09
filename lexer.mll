@@ -47,7 +47,7 @@ let lam     = "\\"     | "\xCE\xBB"     (* λ *)
 let pi      = "forall" | "\xCE\xA0"     (* Π *)
 let sigma   = "sigma"  | "\xCE\xA3"     (* Σ *)
 let def     = "definition" | "def" | "theorem" | "lemma" | "corollary" | "proposition"
-let axiom   = "axiom"|"postulate"
+let axiom   = "axiom" | "postulate"
 
 let subscript = '\xE2' '\x82' ['\x80'-'\x89']
 let kan       = 'U' subscript*
@@ -56,7 +56,6 @@ rule main = parse
 | nl         { nextLine lexbuf; main lexbuf }
 | comment    { nextLine lexbuf; main lexbuf }
 | ws+        { main lexbuf }
-| "module"   { MODULE }      | "where"    { WHERE }
 | "import"   { IMPORT }      | "option"   { OPTION }
 | def        { DEF }         | colon      { COLON }
 | ','        { COMMA }       | '_'        { IRREF }

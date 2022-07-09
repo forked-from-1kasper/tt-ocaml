@@ -1,5 +1,3 @@
-module test where
-
 def id (A : U) : U := A
 def idfun (A : U) (a : A) : A := a
 
