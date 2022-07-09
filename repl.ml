@@ -24,7 +24,7 @@ let main : command -> unit = function
 let fs = ref Files.empty
 let check filename = fs := handleErrors (checkFile !fs) filename !fs
 
-let banner = "Hurricane theorem prover, version 0.0.1"
+let banner = "TT theorem prover, version 0.0.1"
 
 let repl () =
   print_endline ("\n" ^ banner) ;
